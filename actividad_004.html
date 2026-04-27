@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Actividad 004</title>
+  </head>
+  <body>
+
+    <h1>Ejercicio A - Verificación de identidad</h1>
+    <p>Hacé un programa que realice verificación de identidad. El programa deberá pedir una
+clave al usuario y este tendrá tres oportunidades para poner la clave correcta. a) Si el
+usuario pone la clave incorrecta 3 veces, se deberá imprimir “Acceso denegado”. b) Si puso
+la clave mal, pero todavía le quedan oportunidades, imprimir “Vuelva a ingresar la clave”. c)
+Si se ingresó la clave correcta, imprimir “Acceso otorgado”.</p>
+
+    <label>Ingresá la clave:</label>
+    <input type="password" id="inputClave" />
+    <button onclick="verificar()">Verificar</button>
+
+    <p id="mensaje"></p>
+
+    <script>
+      let intentos = 0;
+      const claveCorrecta = "1234";
+
+      function verificar() {
+        const clave = document.getElementById("inputClave").value;
+        intentos++;
+
+        if (clave === claveCorrecta) {
+          document.getElementById("mensaje").textContent = "Acceso otorgado";
+        } else if (intentos >= 3) {
+          document.getElementById("mensaje").textContent = "Acceso denegado";
+        } else {
+          document.getElementById("mensaje").textContent =
+            "Vuelva a ingresar la clave. Intentos restantes: " + (3 - intentos);
+          document.getElementById("inputClave").value = "";
+        }
+      }
+    </script>
+    <h1>Ejercicio B - Mayor/Menor</h1>
+    <p>Realizar un programa que permita el ingreso de 10 valores. Luego, presentar un menú
+con dos opciones: 1 - Buscar menor; 2 - Buscar mayor. Según la opción seleccionada por el
+usuario, debe devolver el menor o mayor de ese conjunto de valores.</p>
+
+<div id="fase-ingreso">
+    <h2>Ingresá 10 valores numéricos:</h2>
+
+    <label>Valor 1: </label><input type="number" id="val1" /><br><br>
+    <label>Valor 2: </label><input type="number" id="val2" /><br><br>
+    <label>Valor 3: </label><input type="number" id="val3" /><br><br>
+    <label>Valor 4: </label><input type="number" id="val4" /><br><br>
+    <label>Valor 5: </label><input type="number" id="val5" /><br><br>
+    <label>Valor 6: </label><input type="number" id="val6" /><br><br>
+    <label>Valor 7: </label><input type="number" id="val7" /><br><br>
+    <label>Valor 8: </label><input type="number" id="val8" /><br><br>
+    <label>Valor 9: </label><input type="number" id="val9" /><br><br>
+    <label>Valor 10: </label><input type="number" id="val10" /><br><br>
+
+    <button onclick="irAlMenu()">Continuar</button>
+  </div>
+
+  <!-- FASE 2: Menú -->
+  <div id="fase-menu" style="display:none;">
+    <h2>Seleccioná una opción:</h2>
+    <button onclick="mostrarResultado('menor')">1 - Buscar menor</button>
+    <button onclick="mostrarResultado('mayor')">2 - Buscar mayor</button>
+  </div>
+
+  <!-- FASE 3: Resultado -->
+  <div id="fase-resultado" style="display:none;">
+    <p id="mensajeResultado"></p>
+    <button onclick="volverAlMenu()">Volver al menú</button>
+  </div>
+<script>
+
+    function irAlMenu() {
+      let hayVacios = false;
+
+      for (let i = 1; i <= 10; i++) {
+        if (document.getElementById("val" + i).value === "") {
+          hayVacios = true;
+        }
+      }
+
+      if (hayVacios) {
+        document.getElementById("errorMsg").style.display = "block";
+      } else {
+        document.getElementById("errorMsg").style.display = "none";
+        document.getElementById("fase-ingreso").style.display = "none";
+        document.getElementById("fase-menu").style.display = "block";
+      }
+    }
+
+    function mostrarResultado(tipo) {
+      let valores = [];
+
+      for (let i = 1; i <= 10; i++) {
+        valores.push(Number(document.getElementById("val" + i).value));
+      }
+
+      let resultado = valores[0];
+
+      for (let i = 1; i < valores.length; i++) {
+        if (tipo === "menor" && valores[i] < resultado) {
+          resultado = valores[i];
+        }
+        if (tipo === "mayor" && valores[i] > resultado) {
+          resultado = valores[i];
+        }
+      }
+
+      let texto = tipo === "menor" ? "El valor menor es: " : "El valor mayor es: ";
+      document.getElementById("mensajeResultado").textContent = texto + resultado;
+
+      document.getElementById("fase-menu").style.display = "none";
+      document.getElementById("fase-resultado").style.display = "block";
+    }
+
+    function volverAlMenu() {
+      document.getElementById("fase-resultado").style.display = "none";
+      document.getElementById("fase-menu").style.display = "block";
+    }
+
+  </script>
+  </body>
+</html>
